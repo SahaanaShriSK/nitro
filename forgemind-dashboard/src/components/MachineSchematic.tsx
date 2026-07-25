@@ -268,14 +268,15 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
             
             {/* Animated Piston Rod & Die Stamp Head */}
             <g style={{
-              animation: isFaulty ? 'none' : 'pressStroke 3s ease-in-out infinite',
+              animation: isFaulty ? 'none' : 'pressStroke 3.5s ease-in-out infinite',
+              transform: isFaulty ? 'translateY(55px)' : 'none',
               opacity: internalOpacity,
               transition: 'all 0.3s ease'
             }}>
-              {/* Piston Rod */}
-              <rect x="292" y="175" width="16" height="60" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+              {/* Piston Rod (Starts retracted inside cylinder) */}
+              <rect x="292" y="125" width="16" height="60" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
               {/* Die / Stamp Head */}
-              <path d="M 270 235 L 330 235 L 340 255 L 260 255 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
+              <path d="M 270 185 L 330 185 L 340 205 L 260 205 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
             </g>
 
             {/* Hydraulic Solenoid Valve Block (Faulty Area) */}
@@ -426,8 +427,8 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
         }
         @keyframes pressStroke {
           0% { transform: translateY(0); }
-          15% { transform: translateY(35px); }
-          20% { transform: translateY(35px); }
+          15% { transform: translateY(55px); }
+          20% { transform: translateY(55px); }
           55% { transform: translateY(0); }
           100% { transform: translateY(0); }
         }
