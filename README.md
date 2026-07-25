@@ -35,24 +35,17 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 - ⚡ Live monitoring dashboard
 
 ---
-
 ## 🏗️ Architecture
 
-```mermaid
-flowchart TD
+<div align="center">
 
-Dashboard --> Orchestrator
-Orchestrator --> MCP
+<img src="assets/architecture.png" alt="ForgeMind Architecture" width="950"/>
 
-MCP --> Diagnosis
-MCP --> SOP
-MCP --> History
-MCP --> Inventory
-MCP --> WorkOrder
-MCP --> Impact
-```
+</div>
 
----
+<p align="center">
+<b>Figure 1.</b> High-level architecture of ForgeMind showing the Dashboard, Orchestrator Agent, NitroStack MCP Server, and integrated AI services.
+</p>
 
 ## 🤖 Multi-Agent Workflow
 
