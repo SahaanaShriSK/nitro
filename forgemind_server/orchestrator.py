@@ -99,7 +99,7 @@ class MCPOrchestrator:
         openai_tools = self._convert_mcp_tools_to_openai(mcp_tools)
         log.info(f"Loaded {len(openai_tools)} tools from MCP server.")
         if self.on_log:
-            tool_names = [t["name"] for t in openai_tools]
+            tool_names = [t["function"]["name"] for t in openai_tools]
             await self.on_log(f"🤖 [MCP SDK Discovery] Loaded MCP Tools: {', '.join(tool_names)}")
 
         messages = [
