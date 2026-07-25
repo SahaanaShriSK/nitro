@@ -38,8 +38,7 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 ## 🏗️ Architecture
 
 <div align="center">
-
-<img src="Architecture.jpeg" alt="ForgeMind Architecture" width="700"/>
+<img src="Architecture.jpeg" alt="ForgeMind Architecture" width="700" height="450"/>
 
 </div>
 
