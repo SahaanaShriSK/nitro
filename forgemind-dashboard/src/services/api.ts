@@ -20,7 +20,10 @@ export class ForgeMindApiService {
   private wsUrl: string;
   private socket: WebSocket | null = null;
 
-  constructor(baseUrl = 'http://localhost:8000', wsUrl = 'ws://localhost:8000/ws') {
+  constructor(
+    baseUrl = import.meta.env.VITE_API_URL || 'https://nitro-1-wpyf.onrender.com',
+    wsUrl = import.meta.env.VITE_WS_URL || 'wss://nitro-1-wpyf.onrender.com/ws'
+  ) {
     this.baseUrl = baseUrl;
     this.wsUrl = wsUrl;
   }

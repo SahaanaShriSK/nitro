@@ -26,8 +26,12 @@ export const App: React.FC = () => {
   
   // Gateway Connection States
   const [isBackendLive, setIsBackendLive] = useState<boolean>(true);
-  const [backendUrl, setBackendUrl] = useState<string>('http://localhost:8000');
-  const [wsUrl, setWsUrl] = useState<string>('ws://localhost:8000/ws');
+  const [backendUrl, setBackendUrl] = useState<string>(
+    import.meta.env.VITE_API_URL || 'https://nitro-1-wpyf.onrender.com'
+  );
+  const [wsUrl, setWsUrl] = useState<string>(
+    import.meta.env.VITE_WS_URL || 'wss://nitro-1-wpyf.onrender.com/ws'
+  );
   
   // Live Log Stream
   const [logStream, setLogStream] = useState<string[]>([
