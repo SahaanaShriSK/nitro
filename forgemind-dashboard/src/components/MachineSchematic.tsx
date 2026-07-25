@@ -106,10 +106,16 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
               className={isFaulty ? 'component-hotspot active' : 'component-hotspot'}
             />
 
-            {/* Spindle Chuck/Tool Holder */}
-            <path d="M 280 200 L 300 200 L 295 230 L 285 230 Z" fill="#64748b" stroke="#475569" strokeWidth="1.5" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
-            {/* Drill Tool Bit */}
-            <path d="M 288 230 L 292 230 L 290 260 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
+            {/* Spindle Chuck/Tool Holder & Drill Tool Bit with spinning/wobbling animations */}
+            <g style={{
+              transformOrigin: '290px 200px',
+              animation: isFaulty ? 'wobble 0.12s linear infinite' : 'rotation 0.6s linear infinite',
+              opacity: internalOpacity,
+              transition: 'all 0.3s ease'
+            }}>
+              <path d="M 280 200 L 300 200 L 295 230 L 285 230 Z" fill="#64748b" stroke="#475569" strokeWidth="1.5" />
+              <path d="M 288 230 L 292 230 L 290 260 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+            </g>
 
             {/* Vibration Sensor Hotspot */}
             <rect x="315" y="168" width="12" height="12" rx="2" 
@@ -199,7 +205,14 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
             <circle cx="385" cy="118" r="10" fill="#64748b" stroke="#475569" strokeWidth="1.5" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
             <path d="M 385 118 L 415 105 L 420 115 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
 
-            {/* Hydraulic Line & Filter Element (Underneath) */}
+            {/* Animated Hydraulic Flow Line & Filter Element */}
+            <path d="M 300 260 L 250 155 L 385 118" stroke="var(--primary)" strokeWidth="2.5" strokeDasharray="6,4" style={{ animation: 'fluidFlow 1s linear infinite', opacity: internalOpacity * 0.7 }} />
+            
+            {/* Heat Pulse Warning Ring on Joint */}
+            {isFaulty && (
+              <circle cx="250" cy="155" r="26" stroke="var(--amber)" strokeWidth="1.5" strokeDasharray="3 3" style={{ animation: 'pulseHeat 1.5s ease-in-out infinite', transformOrigin: '250px 155px', opacity: internalOpacity }} />
+            )}
+
             <rect x="235" y="195" width="12" height="28" rx="2" 
               fill={isFaulty ? 'rgba(245, 158, 11, 0.2)' : hoveredPart === 'filter' ? 'var(--primary-light)' : '#ffffff'} 
               stroke={isFaulty ? 'var(--amber)' : 'var(--primary)'} 
@@ -252,10 +265,18 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
 
             {/* Central Piston Cylinder */}
             <rect x="280" y="75" width="40" height="100" fill="#ffffff" stroke="var(--primary)" strokeWidth="2" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
-            {/* Piston Rod */}
-            <rect x="292" y="175" width="16" height="60" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
-            {/* Die / Stamp Head */}
-            <path d="M 270 235 L 330 235 L 340 255 L 260 255 Z" fill="#64748b" stroke="#475569" strokeWidth="2" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
+            
+            {/* Animated Piston Rod & Die Stamp Head */}
+            <g style={{
+              animation: isFaulty ? 'none' : 'pressStroke 3s ease-in-out infinite',
+              opacity: internalOpacity,
+              transition: 'all 0.3s ease'
+            }}>
+              {/* Piston Rod */}
+              <rect x="292" y="175" width="16" height="60" fill="#94a3b8" stroke="#475569" strokeWidth="1.5" />
+              {/* Die / Stamp Head */}
+              <path d="M 270 235 L 330 235 L 340 255 L 260 255 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
+            </g>
 
             {/* Hydraulic Solenoid Valve Block (Faulty Area) */}
             <rect x="180" y="110" width="40" height="50" rx="3" 
@@ -314,8 +335,17 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
             <line x1="320" y1="120" x2="320" y2="180" stroke="#cbd5e1" strokeWidth="1" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
             <line x1="340" y1="120" x2="340" y2="180" stroke="#cbd5e1" strokeWidth="1" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
 
-            {/* Rotational Fan Impeller */}
-            <circle cx="300" cy="120" r="18" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
+            {/* Animated Rotational Fan Impeller */}
+            <g style={{
+              transformOrigin: '300px 120px',
+              animation: 'rotation 1s linear infinite',
+              opacity: internalOpacity,
+              transition: 'all 0.3s ease'
+            }}>
+              <circle cx="300" cy="120" r="18" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2" />
+              <line x1="300" y1="102" x2="300" y2="138" stroke="#475569" strokeWidth="2" />
+              <line x1="282" y1="120" x2="318" y2="120" stroke="#475569" strokeWidth="2" />
+            </g>
             {/* Fluid Intake Pipes */}
             <path d="M 360 170 L 440 170 L 440 210" stroke="var(--primary)" strokeWidth="2" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
             <path d="M 240 170 L 160 170 L 160 210" stroke="var(--primary)" strokeWidth="2" style={{ opacity: internalOpacity, transition: 'all 0.3s ease' }} />
@@ -378,6 +408,35 @@ export const MachineSchematic: React.FC<MachineSchematicProps> = ({
 
   return (
     <div className="glass-panel" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '390px' }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes rotation {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes wobble {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(-1.5px, 1.5px) rotate(-1.5deg); }
+          50% { transform: translate(1.5px, -1.5px) rotate(1.5deg); }
+          75% { transform: translate(-1.5px, -1.5px) rotate(-0.8deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        @keyframes fluidFlow {
+          from { stroke-dashoffset: 30; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes pressStroke {
+          0% { transform: translateY(0); }
+          15% { transform: translateY(35px); }
+          20% { transform: translateY(35px); }
+          55% { transform: translateY(0); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes pulseHeat {
+          0% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.9; transform: scale(1.05); }
+          100% { opacity: 0.3; transform: scale(1); }
+        }
+      `}} />
       
       {/* Schematic Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.6rem' }}>
