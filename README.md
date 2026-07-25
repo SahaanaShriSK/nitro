@@ -49,31 +49,15 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 
 ## 🤖 Multi-Agent Workflow
 
-```mermaid
-flowchart TD
+<div align="center">
 
-A[Machine Fault]
+<img src="MultiAgentWorkflow.png" alt="ForgeMind Multi-Agent Workflow" width="950"/>
 
-A --> B[Diagnosis Agent]
+</div>
 
-B --> C[Verification Agent]
-
-C --> D[SOP]
-C --> E[History]
-C --> F[Inventory]
-
-D --> G[Decision Agent]
-E --> G
-F --> G
-
-G --> H[Work Order]
-
-H --> I[Impact Analysis]
-
-I --> J[Dashboard]
-```
-
----
+<p align="center">
+<b>Figure 2.</b> Multi-agent workflow for autonomous manufacturing diagnostics.
+</p>
 
 ## 🧠 AI Agents
 
