@@ -11,8 +11,7 @@ import uvicorn
 
 from mcp.client.stdio import stdio_client, StdioServerParameters
 from mcp.client.session import ClientSession
-from orchestrator import MCPOrchestrator
-
+from forgemind_server.orchestrator import MCPOrchestrator
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
