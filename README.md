@@ -39,12 +39,12 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 
 <div align="center">
 
-<img src="architecture.jpeg" alt="ForgeMind Architecture" width="950"/>
+<img src="Architecture.jpeg" alt="ForgeMind Architecture" width="950"/>
 
 </div>
 
 <p align="center">
-<b>Figure 1.</b> High-level architecture of ForgeMind showing the Dashboard, Orchestrator Agent, NitroStack MCP Server, and integrated AI services.
+<b>Figure 1.</b> High-level architecture of ForgeMind.
 </p>
 
 ## 🤖 Multi-Agent Workflow
