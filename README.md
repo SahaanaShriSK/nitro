@@ -51,7 +51,7 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 
 <div align="center">
 
-<img src="MultiAgentWorkflow.png" alt="ForgeMind Multi-Agent Workflow" width="950"/>
+<img src="MultiAgentWorkflow.jpeg" alt="ForgeMind Multi-Agent Workflow" width="950"/>
 
 </div>
 
