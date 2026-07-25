@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Machine } from '../types';
-import { Activity, Flame, Shield, HelpCircle, CheckSquare, Clipboard, Package, Play, Zap, AlertOctagon } from 'lucide-react';
+import { Activity, Shield, AlertOctagon } from 'lucide-react';
 
 interface DefectExplainerProps {
   machine: Machine;
@@ -9,7 +9,7 @@ interface DefectExplainerProps {
 
 export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => {
   const [activeTab, setActiveTab] = useState<'signature' | 'radar' | 'checklist'>('signature');
-  
+
   // Custom checklist state per machine
   const [checklist, setChecklist] = useState<Record<string, boolean>>({
     loto: false,
@@ -72,7 +72,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
         ]
       };
     }
-    
+
     // Default fallback (Healthy or generic)
     return {
       defectName: 'Nominal Mechanical Calibration',
@@ -97,7 +97,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
     const center = 100;
     const r = 70;
     const { friction, thermal, load, power, fatigue } = defectData.wearFactors;
-    
+
     // Five axes at angles: 0, 72, 144, 216, 288 degrees
     const angles = [
       (0 * Math.PI) / 180 - Math.PI / 2,
@@ -106,7 +106,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
       (216 * Math.PI) / 180 - Math.PI / 2,
       (288 * Math.PI) / 180 - Math.PI / 2,
     ];
-    
+
     const factors = [friction, thermal, load, power, fatigue];
     const points = angles.map((angle, i) => {
       const distance = (factors[i] / 100) * r;
@@ -114,20 +114,20 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
       const y = center + distance * Math.sin(angle);
       return `${x},${y}`;
     });
-    
+
     return points.join(' ');
   };
 
   return (
     <div className="glass-panel" style={{ padding: '1.25rem', marginTop: '1.25rem' }}>
-      
+
       {/* Component Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.2rem' }}>
         <div>
-          <span style={{ 
-            fontSize: '0.68rem', 
-            fontWeight: 700, 
-            color: isFaulty ? 'var(--crimson)' : 'var(--emerald)', 
+          <span style={{
+            fontSize: '0.68rem',
+            fontWeight: 700,
+            color: isFaulty ? 'var(--crimson)' : 'var(--emerald)',
             background: isFaulty ? 'var(--crimson-glow)' : 'var(--emerald-glow)',
             padding: '0.2rem 0.5rem',
             borderRadius: '4px',
@@ -147,7 +147,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
 
         {/* Tab Selectors */}
         <div style={{ display: 'flex', gap: '0.25rem', border: '1px solid var(--border-color)', padding: '0.2rem', borderRadius: '8px', background: '#f8fafc' }}>
-          <button 
+          <button
             onClick={() => setActiveTab('signature')}
             style={{
               padding: '0.3rem 0.6rem',
@@ -163,8 +163,8 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
           >
             Defect Signature
           </button>
-          
-          <button 
+
+          <button
             onClick={() => setActiveTab('radar')}
             style={{
               padding: '0.3rem 0.6rem',
@@ -181,7 +181,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
             Stress Radar
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveTab('checklist')}
             style={{
               padding: '0.3rem 0.6rem',
@@ -204,10 +204,10 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
 
       {/* Tab Contents */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '1.25rem', alignItems: 'center' }}>
-        
+
         {/* Left Side: Dynamic Visualizations */}
         <div style={{ minHeight: '220px', background: '#f8fafc', borderRadius: '10px', border: '1px solid var(--border-color)', padding: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-          
+
           {activeTab === 'signature' && (
             <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -222,33 +222,33 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
 
               {/* ROTATIONAL FREQUENCY CHART */}
               <div style={{ position: 'relative', width: '100%', height: '140px', background: '#ffffff', borderRadius: '6px', border: '1px solid var(--border-color)', overflow: 'hidden', padding: '0.5rem 1rem' }}>
-                
+
                 {/* Horizontal gridlines */}
                 <div style={{ position: 'absolute', top: '25%', left: 0, right: 0, borderTop: '1px dashed #f1f5f9' }} />
                 <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, borderTop: '1px dashed #f1f5f9' }} />
                 <div style={{ position: 'absolute', top: '75%', left: 0, right: 0, borderTop: '1px dashed #f1f5f9' }} />
-                
+
                 {/* Healthy baseline line */}
                 <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
                   {/* Healthy Waveform (Smooth ripples) */}
-                  <path d="M 0,110 Q 40,115 80,105 T 160,110 T 240,108 T 320,112 T 400,107 T 480,110" 
-                        fill="none" stroke="var(--emerald)" strokeWidth="1.5" strokeDasharray="3,3" opacity="0.6" />
-                  
+                  <path d="M 0,110 Q 40,115 80,105 T 160,110 T 240,108 T 320,112 T 400,107 T 480,110"
+                    fill="none" stroke="var(--emerald)" strokeWidth="1.5" strokeDasharray="3,3" opacity="0.6" />
+
                   {/* Defect Waveform */}
                   {isFaulty ? (
-                    <path d="M 0,110 Q 30,112 60,115 T 120,40 T 180,112 T 240,110 T 300,25 T 360,115 T 420,108 T 480,110" 
-                          fill="none" stroke="var(--crimson)" strokeWidth="2.2" />
+                    <path d="M 0,110 Q 30,112 60,115 T 120,40 T 180,112 T 240,110 T 300,25 T 360,115 T 420,108 T 480,110"
+                      fill="none" stroke="var(--crimson)" strokeWidth="2.2" />
                   ) : (
-                    <path d="M 0,110 Q 40,110 80,105 T 160,107 T 240,110 T 320,108 T 400,110 T 480,105" 
-                          fill="none" stroke="var(--primary)" strokeWidth="2" />
+                    <path d="M 0,110 Q 40,110 80,105 T 160,107 T 240,110 T 320,108 T 400,110 T 480,105"
+                      fill="none" stroke="var(--primary)" strokeWidth="2" />
                   )}
-                  
+
                   {/* Annotations */}
                   {isFaulty && (
                     <>
                       <circle cx="120" cy="40" r="4" fill="var(--crimson)" />
                       <circle cx="300" cy="25" r="4" fill="var(--crimson)" />
-                      
+
                       <text x="130" y="45" fill="var(--crimson)" fontSize="9" fontWeight="bold">BPFI Harmonic Peak (Friction Spike)</text>
                       <text x="310" y="30" fill="var(--crimson)" fontSize="9" fontWeight="bold">Structural Jitter Sidebands</text>
                     </>
@@ -276,14 +276,14 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
 
           {activeTab === 'radar' && (
             <div style={{ display: 'flex', gap: '1rem', width: '100%', height: '100%', alignItems: 'center', padding: '0 0.5rem' }}>
-              
+
               {/* Radar Chart Drawing */}
               <svg width="200" height="200" style={{ background: '#ffffff', borderRadius: '50%', border: '1px solid var(--border-color)' }}>
                 {/* Concentric grid rings */}
                 <circle cx="100" cy="100" r="70" fill="none" stroke="#f1f5f9" strokeWidth="1" />
                 <circle cx="100" cy="100" r="50" fill="none" stroke="#f1f5f9" strokeWidth="1" />
                 <circle cx="100" cy="100" r="30" fill="none" stroke="#f1f5f9" strokeWidth="1" />
-                
+
                 {/* Axis lines */}
                 {Array.from({ length: 5 }).map((_, idx) => {
                   const angle = (idx * 72 * Math.PI) / 180 - Math.PI / 2;
@@ -293,11 +293,11 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
                 })}
 
                 {/* Polygon Plot */}
-                <polygon 
-                  points={computeRadarPoints()} 
-                  fill={isFaulty ? 'rgba(239, 68, 68, 0.25)' : 'rgba(14, 116, 144, 0.2)'} 
-                  stroke={isFaulty ? 'var(--crimson)' : 'var(--primary)'} 
-                  strokeWidth="2" 
+                <polygon
+                  points={computeRadarPoints()}
+                  fill={isFaulty ? 'rgba(239, 68, 68, 0.25)' : 'rgba(14, 116, 144, 0.2)'}
+                  stroke={isFaulty ? 'var(--crimson)' : 'var(--primary)'}
+                  strokeWidth="2"
                 />
 
                 {/* Outer Labels */}
@@ -305,20 +305,20 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
                   const angle = (idx * 72 * Math.PI) / 180 - Math.PI / 2;
                   const x = 100 + 82 * Math.cos(angle);
                   const y = 100 + 82 * Math.sin(angle);
-                  
+
                   // Alignment shifts based on angle quadrant
                   const anchor = Math.cos(angle) > 0.1 ? 'start' : Math.cos(angle) < -0.1 ? 'end' : 'middle';
                   const dy = Math.sin(angle) > 0.5 ? '0.6em' : Math.sin(angle) < -0.5 ? '-0.2em' : '0.2em';
 
                   return (
-                    <text 
-                      key={idx} 
-                      x={x} 
-                      y={y} 
-                      textAnchor={anchor} 
-                      dy={dy} 
-                      fontSize="9" 
-                      fontWeight="600" 
+                    <text
+                      key={idx}
+                      x={x}
+                      y={y}
+                      textAnchor={anchor}
+                      dy={dy}
+                      fontSize="9"
+                      fontWeight="600"
                       fill="var(--text-main)"
                     >
                       {label}
@@ -354,32 +354,32 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
                 <Shield size={15} color="var(--primary)" />
                 <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Interactive Maintenance Lockout Checklist</span>
               </div>
-              
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {defectData.checklistItems.map((item) => (
-                  <div 
-                    key={item.key} 
+                  <div
+                    key={item.key}
                     onClick={() => toggleCheck(item.key)}
-                    style={{ 
-                      display: 'flex', 
-                      alignItems: 'flex-start', 
-                      gap: '0.6rem', 
-                      padding: '0.5rem', 
-                      borderRadius: '6px', 
-                      background: checklist[item.key] ? '#ecfeff' : '#ffffff', 
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.6rem',
+                      padding: '0.5rem',
+                      borderRadius: '6px',
+                      background: checklist[item.key] ? '#ecfeff' : '#ffffff',
                       border: `1px solid ${checklist[item.key] ? 'var(--primary)' : 'var(--border-color)'}`,
                       cursor: 'pointer',
                       transition: 'all 0.15s ease'
                     }}
                   >
-                    <input 
-                      type="checkbox" 
-                      checked={checklist[item.key]} 
-                      onChange={() => {}} 
-                      style={{ marginTop: '0.15rem', accentColor: 'var(--primary)' }} 
+                    <input
+                      type="checkbox"
+                      checked={checklist[item.key]}
+                      onChange={() => { }}
+                      style={{ marginTop: '0.15rem', accentColor: 'var(--primary)' }}
                     />
-                    <span style={{ 
-                      fontSize: '0.72rem', 
+                    <span style={{
+                      fontSize: '0.72rem',
                       color: checklist[item.key] ? 'var(--text-main)' : 'var(--text-muted)',
                       textDecoration: checklist[item.key] ? 'line-through' : 'none'
                     }}>
@@ -395,7 +395,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
 
         {/* Right Side: Evidence Matrix & Diagnosis Explanation */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          
+
           <div style={{ background: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '0.8rem' }}>
             <span style={{ fontSize: '0.62rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.2rem' }}>
               AI Diagnostic Reason & Evidence
@@ -410,7 +410,7 @@ export const DefectExplainer: React.FC<DefectExplainerProps> = ({ machine }) => 
               <span style={{ color: 'var(--text-muted)' }}>Assigned Part:</span>
               <span className="code-font" style={{ fontWeight: 700, color: 'var(--primary)' }}>{defectData.partNumber}</span>
             </div>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.3rem' }}>
               <span style={{ color: 'var(--text-muted)' }}>Repair Complexity:</span>
               <span style={{ fontWeight: 600, color: isFaulty ? 'var(--crimson)' : 'var(--emerald)' }}>

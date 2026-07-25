@@ -12,18 +12,18 @@ import { apiService } from './services/api';
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'command' | 'investigation' | 'workorders' | 'demolab'>('command');
 
-  
+
   // Application Data States
   const [machines, setMachines] = useState<Machine[]>(INITIAL_MACHINES);
   const [selectedMachine, setSelectedMachine] = useState<Machine>(INITIAL_MACHINES[0]);
-  
+
   const [anomalies, setAnomalies] = useState<AnomalyFinding[]>([]);
   const [workOrders, setWorkOrders] = useState<WorkOrder[]>([DEMO_SCENARIOS[0].generatedWorkOrder]);
-  
+
   // Current Active AI Scenario & Verification Chain
   const [currentScenario, setCurrentScenario] = useState<FaultScenario>(DEMO_SCENARIOS[0]);
   const [isInvestigating, setIsInvestigating] = useState<boolean>(false);
-  
+
   // Gateway Connection States
   const [isBackendLive, setIsBackendLive] = useState<boolean>(true);
   const [backendUrl, setBackendUrl] = useState<string>(
@@ -32,7 +32,7 @@ export const App: React.FC = () => {
   const [wsUrl, setWsUrl] = useState<string>(
     import.meta.env.VITE_WS_URL || 'wss://nitro-1-wpyf.onrender.com/ws'
   );
-  
+
   // Live Log Stream
   const [logStream, setLogStream] = useState<string[]>([
     'System initialized. NitroStack MCP SDK Gateway ready.',
@@ -47,9 +47,9 @@ export const App: React.FC = () => {
     if (isBackendLive) {
       (apiService as any).baseUrl = backendUrl;
       (apiService as any).wsUrl = wsUrl;
-      
+
       // Establish live WebSocket connection to stream live agent logs
-      const socket = apiService.connectWebSocket(
+      apiService.connectWebSocket(
         (data: any) => {
           if (data && data.type === 'log') {
             addLog(data.message);
@@ -61,7 +61,7 @@ export const App: React.FC = () => {
           console.error('WebSocket Error:', err);
         }
       );
-      
+
       // 1. Fetch Sandy's Live Machines
       apiService.fetchMachines().then((backendMachines) => {
         if (backendMachines && backendMachines.length > 0) {
@@ -78,10 +78,10 @@ export const App: React.FC = () => {
           description: `REAL PLC EVENT: ${s.operatorNote}`,
           machineId: s.equipmentId,
           severity: (s.severity === "HIGH" ? "CRITICAL" : "WARNING") as "CRITICAL" | "WARNING",
-          simulatedMetrics: { 
-            vibration: s.telemetry?.vibration_mm_s_rms || s.telemetry?.vibration || 0, 
+          simulatedMetrics: {
+            vibration: s.telemetry?.vibration_mm_s_rms || s.telemetry?.vibration || 0,
             temperature: s.telemetry?.temperature_celsius || s.telemetry?.temperature || 0,
-            powerConsumption: s.telemetry?.power_consumption || s.telemetry?.powerConsumption || 15.0 
+            powerConsumption: s.telemetry?.power_consumption || s.telemetry?.powerConsumption || 15.0
           },
           verificationSteps: DEMO_SCENARIOS[0].verificationSteps,
           sop: DEMO_SCENARIOS[0].sop,
@@ -155,23 +155,23 @@ export const App: React.FC = () => {
       try {
         // Ensure the API uses the configured backend URL
         (apiService as any).baseUrl = backendUrl;
-        
+
         let response;
         if ((scenario as any).rawPlcEvent) {
-           response = await apiService.simulatePlcEvent((scenario as any).rawPlcEvent);
+          response = await apiService.simulatePlcEvent((scenario as any).rawPlcEvent);
         } else {
-           response = await apiService.injectFault({
-             machineId: scenario.machineId,
-             sensor: "Vibration",
-             value: scenario.simulatedMetrics.vibration,
-             scenarioId: scenario.id
-           });
+          response = await apiService.injectFault({
+            machineId: scenario.machineId,
+            sensor: "Vibration",
+            value: scenario.simulatedMetrics.vibration,
+            scenarioId: scenario.id
+          });
         }
 
         if (response.success && response.result) {
           const aiVerdict = response.result;
           addLog(`[Live Mode] AI Verdict Received: ${aiVerdict.recommended_action}`);
-          
+
           const realWorkOrder = {
             ...scenario.generatedWorkOrder,
             id: `WO-AI-${Math.floor(Math.random() * 10000)}`,
@@ -181,7 +181,7 @@ export const App: React.FC = () => {
           };
 
           setCurrentScenario((s) => ({ ...s!, generatedWorkOrder: realWorkOrder }));
-          
+
           setWorkOrders((prev) => {
             if (prev.some((w) => w.id === realWorkOrder.id)) return prev;
             return [realWorkOrder, ...prev];
@@ -288,7 +288,7 @@ export const App: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
+
       {/* Top Header */}
       <Header
         activeTab={activeTab}
