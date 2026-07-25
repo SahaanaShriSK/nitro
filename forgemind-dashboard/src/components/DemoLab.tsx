@@ -84,19 +84,21 @@ export const DemoLab: React.FC<DemoLabProps> = ({
               <div
                 key={s.id}
                 style={{
-                  background: 'rgba(15, 22, 36, 0.6)',
-                  border: `1px solid ${s.severity === 'CRITICAL' ? 'rgba(255, 51, 102, 0.3)' : 'rgba(255, 183, 0, 0.3)'}`,
+                  background: s.severity === 'CRITICAL' ? 'rgba(239, 68, 68, 0.04)' : 'rgba(245, 158, 11, 0.04)',
+                  border: `1px solid ${s.severity === 'CRITICAL' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(245, 158, 11, 0.15)'}`,
                   borderRadius: '10px',
                   padding: '1rem',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  gap: '1rem'
+                  gap: '1rem',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                  transition: 'transform 0.2s ease-in-out'
                 }}
               >
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.3rem' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 800 }}>{s.title}</h3>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-main)' }}>{s.title}</h3>
                     <span className={`status-pill ${s.severity.toLowerCase()}`}>
                       {s.severity}
                     </span>
@@ -107,11 +109,11 @@ export const DemoLab: React.FC<DemoLabProps> = ({
                   </p>
 
                   <div style={{ display: 'flex', gap: '0.8rem', fontSize: '0.72rem' }}>
-                    <span className="code-font" style={{ color: 'var(--primary)' }}>
+                    <span className="code-font" style={{ color: 'var(--primary)', fontWeight: 600 }}>
                       Target: {s.machineId}
                     </span>
-                    <span className="code-font" style={{ color: 'var(--amber)' }}>
-                      Vib: {s.simulatedMetrics.vibration} mm/s | Temp: {s.simulatedMetrics.temperature}°C
+                    <span className="code-font" style={{ color: 'var(--text-muted)' }}>
+                      Vib: <strong style={{ color: 'var(--text-main)' }}>{s.simulatedMetrics.vibration} mm/s</strong> | Temp: <strong style={{ color: 'var(--text-main)' }}>{s.simulatedMetrics.temperature}°C</strong>
                     </span>
                   </div>
                 </div>
@@ -143,7 +145,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
               <select
                 value={customMachineId}
                 onChange={(e) => setCustomMachineId(e.target.value)}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', color: '#fff', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem' }}
+                style={{ width: '100%', background: '#ffffff', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem', outline: 'none' }}
               >
                 {machines.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -160,7 +162,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
               <select
                 value={customSensor}
                 onChange={(e) => setCustomSensor(e.target.value)}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', color: '#fff', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem' }}
+                style={{ width: '100%', background: '#ffffff', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem', outline: 'none' }}
               >
                 <option value="vibration">Vibration (mm/s)</option>
                 <option value="temperature">Temperature (°C)</option>
@@ -177,7 +179,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
                 type="number"
                 value={customValue}
                 onChange={(e) => setCustomValue(Number(e.target.value))}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', color: '#fff', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem' }}
+                style={{ width: '100%', background: '#ffffff', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem', outline: 'none' }}
               />
             </div>
 
@@ -211,7 +213,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
                 value={backendUrl}
                 onChange={(e) => setBackendUrl(e.target.value)}
                 className="code-font"
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', color: '#fff', border: '1px solid var(--border-color)', padding: '0.4rem 0.6rem', borderRadius: '6px' }}
+                style={{ width: '100%', background: '#ffffff', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '0.4rem 0.6rem', borderRadius: '6px', outline: 'none' }}
               />
             </div>
 
@@ -222,7 +224,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
                 value={wsUrl}
                 onChange={(e) => setWsUrl(e.target.value)}
                 className="code-font"
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', color: '#fff', border: '1px solid var(--border-color)', padding: '0.4rem 0.6rem', borderRadius: '6px' }}
+                style={{ width: '100%', background: '#ffffff', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '0.4rem 0.6rem', borderRadius: '6px', outline: 'none' }}
               />
             </div>
           </div>
@@ -240,7 +242,7 @@ export const DemoLab: React.FC<DemoLabProps> = ({
           </div>
 
           {connectionMessage && (
-            <div style={{ marginTop: '0.6rem', fontSize: '0.72rem', color: isBackendLive ? 'var(--emerald)' : 'var(--amber)', background: 'rgba(0,0,0,0.3)', padding: '0.5rem', borderRadius: '6px' }}>
+            <div style={{ marginTop: '0.6rem', fontSize: '0.72rem', color: isBackendLive ? 'var(--emerald)' : 'var(--amber)', background: 'rgba(0,0,0,0.02)', border: '1px solid var(--border-color)', padding: '0.5rem', borderRadius: '6px' }}>
               {connectionMessage}
             </div>
           )}
