@@ -199,9 +199,3 @@ http://localhost:3000
 ```
 
 ---
-
-<div align="center">
-
-**Built with ❤️ using NitroStack MCP**
-
-</div>
