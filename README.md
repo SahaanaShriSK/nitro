@@ -39,7 +39,7 @@ Instead of manually searching machine logs, SOPs, maintenance history, and inven
 
 <div align="center">
 
-<img src="Architecture.jpeg" alt="ForgeMind Architecture" width="950"/>
+<img src="Architecture.jpeg" alt="ForgeMind Architecture" width="700"/>
 
 </div>
 
