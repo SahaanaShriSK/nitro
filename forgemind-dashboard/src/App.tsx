@@ -45,7 +45,7 @@ export const App: React.FC = () => {
       (apiService as any).wsUrl = wsUrl;
       
       // Establish live WebSocket connection to stream live agent logs
-      const socket = apiService.connectWebSocket(
+      apiService.connectWebSocket(
         (data: any) => {
           if (data && data.type === 'log') {
             addLog(data.message);

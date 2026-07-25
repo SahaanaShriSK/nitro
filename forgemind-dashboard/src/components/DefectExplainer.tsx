@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import type { Machine } from '../types';
-import { Activity, Flame, Shield, HelpCircle, CheckSquare, Clipboard, Package, Play, Zap, AlertOctagon } from 'lucide-react';
-
+import { Activity, Shield, AlertOctagon } from "lucide-react";
 interface DefectExplainerProps {
   machine: Machine;
   onCheckInventory?: (partId: string) => void;
